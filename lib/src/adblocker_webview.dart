@@ -22,6 +22,7 @@ class AdBlockerWebview extends StatefulWidget {
     this.onProgress,
     this.onLoadError,
     this.onUrlChanged,
+    this.userAgent,
     super.key,
   }) : assert(
          url != null || initialHtmlData != null,
@@ -39,6 +40,8 @@ class AdBlockerWebview extends StatefulWidget {
   /// The initial HTML content to load in the webview.
   /// Either this or [url] must be provided, but not both.
   final String? initialHtmlData;
+
+  final String? userAgent;
 
   /// Required: The controller for [AdBlockerWebview].
   /// See more at [AdBlockerWebviewController].
@@ -89,7 +92,7 @@ class _AdBlockerWebviewState extends State<AdBlockerWebview> {
       _webViewController.setOnConsoleMessage((message) {
         debugLog('[FLUTTER_WEBVIEW_LOG]: ${message.message}');
       }),
-      _webViewController.setUserAgent(_getUserAgent()),
+      _webViewController.setUserAgent(widget.userAgent ?? _getUserAgent()),
       _webViewController.setJavaScriptMode(JavaScriptMode.unrestricted),
     ]);
 
